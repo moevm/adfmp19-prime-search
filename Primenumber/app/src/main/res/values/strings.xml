@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">Простые числа</string>
-    <string name="button_game_on_speed">Игра на скорость</string>
-    <string name="button_game_on_time">Игра на время</string>
-    <string name="button_endless_mode">Бесконечный режим</string>
+    <string name="game_on_speed">Игра на скорость</string>
+    <string name="game_on_time">Игра на время</string>
+    <string name="endless_mode">Бесконечный режим</string>
     <string name="easy">Легкий уровень</string>
     <string name="average">Средний уровень</string>
     <string name="difficult">Сложный уровень</string>
     <string name="prime">Простое</string>
     <string name="composite">Составное</string>
-    <string name="record">Ваш рекорд: $record</string>
+    <string name="record">Ваш рекорд:</string>
     <string name="top">1-ое место:</string>
     <string name="name">Введите имя игрока:</string>
     <string name="save">Сохранить</string>

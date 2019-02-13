@@ -20,7 +20,7 @@
             app:layout_constraintEnd_toEndOf="parent">
         <Button
                 style="@style/button"
-                android:text="@string/button_game_on_time"
+                android:text="@string/game_on_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/button_time_easy"
@@ -30,12 +30,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
-                android:text="@string/button_game_on_speed"
+                android:text="@string/game_on_speed"
                 android:id="@+id/button_speed_average"
         />
         <Button
                 style="@style/button"
-                android:text="@string/button_endless_mode"
+                android:text="@string/endless_mode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/button_endless_difficult"

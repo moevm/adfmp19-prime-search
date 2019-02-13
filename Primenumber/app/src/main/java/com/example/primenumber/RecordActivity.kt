@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_record.*
 class RecordActivity : AppCompatActivity() {
 
     fun openTableRecord() {
-        val intent = Intent(this, RecordActivity::class.java)
+        val intent = Intent(this, TableRecordActivity::class.java)
         startActivity(intent)
     }
 
@@ -21,11 +21,15 @@ class RecordActivity : AppCompatActivity() {
         val level = getIntent().getStringExtra("level")
         val record = getIntent().getIntExtra("record", 0)
 
-        tv_record.setText(R.string.record)
+        tv_record.setText("Ваш рекорд: $record")
+
+        button_end.setOnClickListener {
+            openTableRecord()
+        }
 
         button_save.setOnClickListener {
             val name = et_name.text.toString()
-            if (name != null) {
+            if (name != "") {
                 //сохранение результата
                 openTableRecord()
             } else {

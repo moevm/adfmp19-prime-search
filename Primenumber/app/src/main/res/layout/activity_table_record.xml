@@ -5,4 +5,31 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".TableRecordActivity"/>
+        tools:context=".TableRecordActivity">
+    <android.support.design.widget.TabLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tabLayout_mode" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/colorPrimary_2" android:layout_marginBottom="2dp"
+            app:layout_constraintBottom_toTopOf="@+id/_dynamic">
+
+        <android.support.design.widget.TabItem
+                android:text="@string/game_on_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tabItem_time" android:background="@color/colorPrimary"/>
+
+        <android.support.design.widget.TabItem
+                android:text="@string/game_on_speed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tabItem_speed"/>
+
+        <android.support.design.widget.TabItem
+                android:text="@string/endless_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tabItem_endless"/>
+    </android.support.design.widget.TabLayout>
+</android.support.constraint.ConstraintLayout>
