@@ -23,6 +23,11 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun openStatistics() {
+        val intent = Intent(this, TableRecordActivity::class.java)
+        startActivity(intent)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -64,6 +69,10 @@ class MainActivity : AppCompatActivity() {
                 level = "difficult"
                 openGame(mode, level)
             }
+        }
+
+        button_statistics.setOnClickListener {
+            openStatistics()
         }
 
     }

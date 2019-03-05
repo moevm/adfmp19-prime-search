@@ -6,6 +6,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
+    <ImageButton
+            android:layout_width="49dp"
+            android:layout_height="54dp" app:srcCompat="@android:drawable/btn_star_big_on"
+            android:id="@+id/button_statistics" android:background="@android:color/transparent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"/>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"

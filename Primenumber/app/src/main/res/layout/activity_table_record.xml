@@ -6,30 +6,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".TableRecordActivity">
-    <android.support.design.widget.TabLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/tabLayout_mode" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/colorPrimary_2" android:layout_marginBottom="2dp"
-            app:layout_constraintBottom_toTopOf="@+id/_dynamic">
 
-        <android.support.design.widget.TabItem
-                android:text="@string/game_on_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tabItem_time" android:background="@color/colorPrimary"/>
+    <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:id="@+id/viewPager">
 
-        <android.support.design.widget.TabItem
-                android:text="@string/game_on_speed"
-                android:layout_width="wrap_content"
+        <android.support.design.widget.TabLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tabItem_speed"/>
+                android:layout_gravity="top"
+                android:background="@color/colorPrimary_2" android:id="@+id/tabLayout">
 
-        <android.support.design.widget.TabItem
-                android:text="@string/endless_mode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tabItem_endless"/>
-    </android.support.design.widget.TabLayout>
+            <android.support.design.widget.TabItem
+                    android:text="@string/game_on_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tabItem_time"/>
+
+            <android.support.design.widget.TabItem
+                    android:text="@string/game_on_speed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tabItem_speed"/>
+
+            <android.support.design.widget.TabItem
+                    android:text="@string/endless_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tabItem_endless"/>
+
+
+        </android.support.design.widget.TabLayout>
+
+    </android.support.v4.view.ViewPager>
+
+
 </android.support.constraint.ConstraintLayout>

@@ -3,11 +3,12 @@ package com.example.primenumber
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import java.util.Random
 import kotlinx.android.synthetic.main.activity_record.*
 
 class RecordActivity : AppCompatActivity() {
 
-    fun openTableRecord() {
+    fun openTableRecord(name: String) {
         val intent = Intent(this, TableRecordActivity::class.java)
         startActivity(intent)
     }
@@ -23,17 +24,24 @@ class RecordActivity : AppCompatActivity() {
 
         tv_record.setText("Ваш рекорд: $record")
 
+        val nameUser = "Игрок" + Random().nextInt(1000).toString()
+        et_name.hint = nameUser
+
         button_end.setOnClickListener {
-            openTableRecord()
+            openTableRecord("")
         }
 
         button_save.setOnClickListener {
             val name = et_name.text.toString()
             if (name != "") {
                 //сохранение результата
-                openTableRecord()
+                openTableRecord(name)
             } else {
-                et_name.setBackgroundColor(getResources().getColor(R.color.colorAccent))
+                if (et_name.hint.toString() != "") {
+                    openTableRecord(et_name.hint.toString())
+                } else {
+                    et_name.setBackgroundColor(getResources().getColor(R.color.colorAccent))
+                }
             }
         }
 
