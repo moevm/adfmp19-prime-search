@@ -10,6 +10,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="tab time" tools:layout_marginTop="300px" android:textSize="50sp"/>
+    <Spinner
+            android:layout_width="fill_parent"
+            android:drawSelectorOnTop="true"
+            android:layout_height="wrap_content" android:id="@+id/spinner2" tools:layout_marginTop="1000dp"
+            tools:entries="@array/records_time"/>
 
 
 </FrameLayout>
