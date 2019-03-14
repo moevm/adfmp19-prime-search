@@ -4,9 +4,14 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.GridView
+import kotlinx.android.synthetic.main.fragment_tab_item_speed.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,9 +28,30 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class tabItem_speed : Fragment() {
+class tabItem_speed : Fragment(), AdapterView.OnItemClickListener {
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            Log.d("QQQ", listView.count.toString())
+    }
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val prime_number = arrayOf("2", "3", "5").toList()
+        val adapter = ArrayAdapter<String>(
+
+            context,
+            android.R.layout.simple_list_item_1, prime_number
+        )
+        listView.adapter = adapter
+        Log.d("QQQ", listView.count.toString())
+
+//        listView.setOnClickListener {
+//            Log.d("QQQ", listView.count.toString())
+//        }
+    }
+
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
 
@@ -35,6 +61,7 @@ class tabItem_speed : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onCreateView(
@@ -42,18 +69,21 @@ class tabItem_speed : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tab_item_speed, container, false)
+        val inflater = inflater.inflate(R.layout.fragment_tab_item_speed, container, false)
+        return inflater
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
+
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
             listener = context
+
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }
@@ -62,6 +92,7 @@ class tabItem_speed : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
+
     }
 
     /**

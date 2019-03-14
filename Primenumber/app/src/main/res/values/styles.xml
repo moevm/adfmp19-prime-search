@@ -28,6 +28,12 @@
         <item name="android:layout_alignParentRight">true</item>
     </style>
 
+    <style name="button_main">
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
     <style name="button_number">
         <item name="android:textSize">20sp</item>
         <item name="android:padding">15dp</item>

@@ -6,9 +6,24 @@
              tools:context=".tabItem_speed">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="tab speed" tools:layout_marginTop="300px" android:textSize="50sp"/>
+            tools:layout_marginTop="250px">
+        <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/textView"/>
+        <ListView
+                android:layout_width="match_parent"
+                android:layout_height="575dp" android:id="@+id/listView"/>
+        <Button
+                android:text="@string/main"
+                style="@style/button_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button_main"/>
+    </LinearLayout>
 
 </FrameLayout>
