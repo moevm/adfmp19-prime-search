@@ -13,9 +13,4 @@
     <string name="name">Введите имя игрока:</string>
     <string name="save">Сохранить</string>
     <string name="main">Главная страница</string>
-    <string-array name="records_time">
-        <item>Malaysia</item>
-        <item>United States</item>
-        <item>Indonesia</item>
-    </string-array>
 </resources>

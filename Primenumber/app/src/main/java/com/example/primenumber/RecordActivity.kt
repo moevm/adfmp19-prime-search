@@ -1,10 +1,13 @@
 package com.example.primenumber
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import java.util.Random
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_record.*
+import java.io.*
+import java.util.*
 
 class RecordActivity : AppCompatActivity() {
 
@@ -26,6 +29,27 @@ class RecordActivity : AppCompatActivity() {
 
         val nameUser = "Игрок" + Random().nextInt(1000).toString()
         et_name.hint = nameUser
+
+        try {
+            val recordOfRecord = "$nameUser $record\n"
+            val recordFile = "record"+mode+level+".txt"
+            val fOut = openFileOutput(
+                recordFile,
+                Context.MODE_APPEND
+            )
+
+            val osw = OutputStreamWriter(fOut)
+
+            osw.write(recordOfRecord)
+
+            osw.flush()
+            osw.close()
+
+            Log.d("QQQ", "success = $recordOfRecord")
+            Log.d("QQQ", "success = $recordFile")
+        } catch (ioe: IOException) {
+            ioe.printStackTrace()
+        }
 
         button_end.setOnClickListener {
             openTableRecord("")

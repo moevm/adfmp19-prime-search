@@ -10,8 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.GridView
 import kotlinx.android.synthetic.main.fragment_tab_item_speed.*
+import java.io.IOException
+import java.io.InputStreamReader
+import java.io.OutputStreamWriter
+
+import android.content.ContextWrapper
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -30,7 +34,6 @@ private const val ARG_PARAM2 = "param2"
  */
 class tabItem_speed : Fragment(), AdapterView.OnItemClickListener {
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            Log.d("QQQ", listView.count.toString())
     }
 
     // TODO: Rename and change types of parameters
@@ -38,18 +41,44 @@ class tabItem_speed : Fragment(), AdapterView.OnItemClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val prime_number = arrayOf("2", "3", "5").toList()
-        val adapter = ArrayAdapter<String>(
+        var readString = "1"
+        try {
+            var contextWrapper = android.content.ContextWrapper(context)
+            val TESTSTRING = "Hello Android"
+//            val fOut = contextWrapper.openFileOutput(
+//                "samplefile.txt",
+//                Context.MODE_PRIVATE
+//            )
+//            val osw = OutputStreamWriter(fOut)
+//
+//            osw.write(TESTSTRING)
+//
+//            osw.flush()
+//            osw.close()
 
+            val fIn = contextWrapper.openFileInput("samplefile.txt")
+            val isr = InputStreamReader(fIn)
+
+            val inputBuffer = CharArray(TESTSTRING.length)
+
+            isr.read(inputBuffer)
+
+            readString = String(inputBuffer)
+
+            val isTheSame = TESTSTRING == readString
+
+            Log.d("QQQ", "success = $isTheSame")
+        } catch (ioe: IOException) {
+            ioe.printStackTrace()
+        }
+
+        val prime_number = arrayOf(readString, "3", "5").toList()
+        val adapter = ArrayAdapter<String>(
             context,
             android.R.layout.simple_list_item_1, prime_number
         )
         listView.adapter = adapter
-        Log.d("QQQ", listView.count.toString())
 
-//        listView.setOnClickListener {
-//            Log.d("QQQ", listView.count.toString())
-//        }
     }
 
     private var param2: String? = null
@@ -57,6 +86,7 @@ class tabItem_speed : Fragment(), AdapterView.OnItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)

@@ -4,9 +4,18 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import kotlinx.android.synthetic.main.fragment_tab_item_speed.*
+import kotlinx.android.synthetic.main.fragment_tab_item_time.*
+import java.io.IOException
+import java.io.InputStreamReader
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,6 +44,55 @@ class tabItem_time : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val spinnerAdapter = ArrayAdapter<String>(
+            context,
+            android.R.layout.simple_list_item_1, arrayOf("easy", "medium", "hard")
+        )
+
+        spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val recordFileEasy = "recordtimeeasy.txt"
+                val recordFileMedium = "recordtimemedium.txt"
+                val recordFileHard = "recordtimehard.txt"
+
+                val recordList = ArrayList<String>()
+                try {
+                    val contextWrapper = android.content.ContextWrapper(context)
+
+                    val fIn = contextWrapper.openFileInput(recordFileEasy)
+                    val isr = InputStreamReader(fIn)
+
+                    val scanner = Scanner(isr)
+
+                    while (scanner.hasNextLine()) {
+                        recordList.add(scanner.nextLine() + "\n")
+                    }
+
+                    Log.d("QQQ", "success = ${recordList.size}")
+                } catch (ioe: IOException) {
+                    ioe.printStackTrace()
+                }
+
+                val adapter = ArrayAdapter<String>(
+                    context,
+                    android.R.layout.simple_list_item_1, recordList
+                )
+                listTimeView.adapter = adapter
+            }
+
+        }
+
+        spinner2.adapter = spinnerAdapter
+
     }
 
     override fun onCreateView(

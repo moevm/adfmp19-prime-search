@@ -8,7 +8,6 @@ import android.util.Log
 class PagerAdapter(fragmentManager: FragmentManager, private val numberOfTabs : Int) : FragmentStatePagerAdapter(fragmentManager) {
 
     override fun getItem(p0: Int): Fragment {
-        Log.d("QQQ", "item : " + p0.toString())
         return when (p0) {
             0 -> tabItem_time()
             1 -> tabItem_speed()
