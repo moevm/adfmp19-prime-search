@@ -16,6 +16,8 @@ import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 
 import android.content.ContextWrapper
+import kotlinx.android.synthetic.main.fragment_tab_item_time.*
+import java.util.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -41,43 +43,56 @@ class tabItem_speed : Fragment(), AdapterView.OnItemClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        var readString = "1"
-        try {
-            var contextWrapper = android.content.ContextWrapper(context)
-            val TESTSTRING = "Hello Android"
-//            val fOut = contextWrapper.openFileOutput(
-//                "samplefile.txt",
-//                Context.MODE_PRIVATE
-//            )
-//            val osw = OutputStreamWriter(fOut)
-//
-//            osw.write(TESTSTRING)
-//
-//            osw.flush()
-//            osw.close()
 
-            val fIn = contextWrapper.openFileInput("samplefile.txt")
-            val isr = InputStreamReader(fIn)
+        val spinnerAdapter = ArrayAdapter<String>(
+            context,
+            android.R.layout.simple_list_item_1, arrayOf("easy", "medium", "hard")
+        )
 
-            val inputBuffer = CharArray(TESTSTRING.length)
+        spinnerSpeed.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
 
-            isr.read(inputBuffer)
+            }
 
-            readString = String(inputBuffer)
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val recordFileEasy = "recordspeedeasy.txt"
+                val recordFileMedium = "recordspeedaverage.txt"
+                val recordFileHard = "recordspeeddifficult.txt"
 
-            val isTheSame = TESTSTRING == readString
+                val recordList = ArrayList<String>()
+                try {
+                    val contextWrapper = android.content.ContextWrapper(context)
 
-            Log.d("QQQ", "success = $isTheSame")
-        } catch (ioe: IOException) {
-            ioe.printStackTrace()
+                    var fIn = contextWrapper.openFileInput(recordFileEasy)
+                    when (position) {
+                        0 -> fIn = contextWrapper.openFileInput(recordFileEasy)
+                        1 -> fIn = contextWrapper.openFileInput(recordFileMedium)
+                        2 -> fIn = contextWrapper.openFileInput(recordFileHard)
+                    }
+
+                    val isr = InputStreamReader(fIn)
+
+                    val scanner = Scanner(isr)
+
+                    while (scanner.hasNextLine()) {
+                        recordList.add(scanner.nextLine() + "\n")
+                    }
+
+                    Log.d("QQQ", "success = ${recordList.size}")
+                } catch (ioe: IOException) {
+                    ioe.printStackTrace()
+                }
+
+                val adapter = ArrayAdapter<String>(
+                    context,
+                    android.R.layout.simple_list_item_1, recordList
+                )
+                listSpeedView.adapter = adapter
+            }
+
         }
 
-        val prime_number = arrayOf(readString, "3", "5").toList()
-        val adapter = ArrayAdapter<String>(
-            context,
-            android.R.layout.simple_list_item_1, prime_number
-        )
-        listView.adapter = adapter
+        spinnerSpeed.adapter = spinnerAdapter
 
     }
 

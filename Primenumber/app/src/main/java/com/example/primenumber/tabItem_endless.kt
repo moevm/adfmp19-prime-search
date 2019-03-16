@@ -4,9 +4,17 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import kotlinx.android.synthetic.main.fragment_tab_item_endless.*
+import kotlinx.android.synthetic.main.fragment_tab_item_speed.*
+import java.io.IOException
+import java.io.InputStreamReader
+import java.util.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,6 +36,37 @@ class tabItem_endless : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val recordFile = "recordendless.txt"
+
+        val recordList = ArrayList<String>()
+        try {
+            val contextWrapper = android.content.ContextWrapper(context)
+
+            val fIn = contextWrapper.openFileInput(recordFile)
+
+            val isr = InputStreamReader(fIn)
+
+            val scanner = Scanner(isr)
+
+            while (scanner.hasNextLine()) {
+                recordList.add(scanner.nextLine() + "\n")
+            }
+
+            Log.d("QQQ", "success = ${recordList.size}")
+        } catch (ioe: IOException) {
+            ioe.printStackTrace()
+        }
+
+        val adapter = ArrayAdapter<String>(
+            context,
+            android.R.layout.simple_list_item_1, recordList
+        )
+        listEndlessView.adapter = adapter
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

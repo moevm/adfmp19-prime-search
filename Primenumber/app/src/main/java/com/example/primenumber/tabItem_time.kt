@@ -54,21 +54,27 @@ class tabItem_time : Fragment() {
             android.R.layout.simple_list_item_1, arrayOf("easy", "medium", "hard")
         )
 
-        spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinnerTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val recordFileEasy = "recordtimeeasy.txt"
-                val recordFileMedium = "recordtimemedium.txt"
-                val recordFileHard = "recordtimehard.txt"
+                val recordFileMedium = "recordtimeaverage.txt"
+                val recordFileHard = "recordtimedifficult.txt"
 
                 val recordList = ArrayList<String>()
                 try {
                     val contextWrapper = android.content.ContextWrapper(context)
 
-                    val fIn = contextWrapper.openFileInput(recordFileEasy)
+                    var fIn = contextWrapper.openFileInput(recordFileEasy)
+                    when (position) {
+                        0 -> fIn = contextWrapper.openFileInput(recordFileEasy)
+                        1 -> fIn = contextWrapper.openFileInput(recordFileMedium)
+                        2 -> fIn = contextWrapper.openFileInput(recordFileHard)
+                    }
+
                     val isr = InputStreamReader(fIn)
 
                     val scanner = Scanner(isr)
@@ -91,7 +97,7 @@ class tabItem_time : Fragment() {
 
         }
 
-        spinner2.adapter = spinnerAdapter
+        spinnerTime.adapter = spinnerAdapter
 
     }
 
