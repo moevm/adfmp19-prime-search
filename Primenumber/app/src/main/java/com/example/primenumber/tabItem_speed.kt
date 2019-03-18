@@ -46,7 +46,7 @@ class tabItem_speed : Fragment(), AdapterView.OnItemClickListener {
 
         val spinnerAdapter = ArrayAdapter<String>(
             context,
-            android.R.layout.simple_list_item_1, arrayOf("easy", "medium", "hard")
+            android.R.layout.simple_list_item_1, arrayOf(getString(R.string.easy), getString(R.string.average), getString(R.string.difficult))
         )
 
         spinnerSpeed.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{

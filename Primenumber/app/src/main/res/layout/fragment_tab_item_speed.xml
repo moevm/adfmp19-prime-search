@@ -12,10 +12,15 @@
         <Spinner
                 android:layout_width="fill_parent"
                 android:drawSelectorOnTop="true"
-                android:layout_height="wrap_content" android:id="@+id/spinnerSpeed" tools:layout_marginTop="1000dp"/>
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerSpeed"
+                tools:layout_marginTop="1000dp"
+        />
         <ListView
                 android:layout_width="match_parent"
-                android:layout_height="575dp" android:id="@+id/listSpeedView" tools:layout_marginTop="300px"/>
+                android:layout_height="575dp"
+                android:id="@+id/listSpeedView"
+                tools:layout_marginTop="300px"/>
     </LinearLayout>
 
 </FrameLayout>

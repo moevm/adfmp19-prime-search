@@ -11,27 +11,10 @@ import java.util.*
 
 class RecordActivity : AppCompatActivity() {
 
-    fun openTableRecord(name: String) {
-        val intent = Intent(this, TableRecordActivity::class.java)
-        startActivity(intent)
-    }
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_record)
-
-        val mode = getIntent().getStringExtra("mode")
-        val level = getIntent().getStringExtra("level")
-        val record = getIntent().getIntExtra("record", 0)
-
-        tv_record.setText("Ваш рекорд: $record")
-
-        val nameUser = "Игрок" + Random().nextInt(1000).toString()
-        et_name.hint = nameUser
+    fun openTableRecord(name: String, mode: String, level: String, record: Int) {
 
         try {
-            val recordOfRecord = "$nameUser $record\n"
+            val recordOfRecord = "$name $record\n"
             val recordFile = "record"+mode+level+".txt"
             val fOut = openFileOutput(
                 recordFile,
@@ -51,18 +34,44 @@ class RecordActivity : AppCompatActivity() {
             ioe.printStackTrace()
         }
 
+        val intent = Intent(this, TableRecordActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun openTableRecordEnd() {
+        val intent = Intent(this, TableRecordActivity::class.java)
+        startActivity(intent)
+    }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_record)
+
+        val mode = getIntent().getStringExtra("mode")
+        val level = getIntent().getStringExtra("level")
+        val record = getIntent().getIntExtra("record", 0)
+
+        if (mode != "endless") {
+            tv_record.setText("Ваш рекорд: $record/50")
+        } else {
+            tv_record.setText("Ваш рекорд: $record")
+        }
+
+        val nameUser = "Игрок" + Random().nextInt(1000).toString()
+        et_name.hint = nameUser
+
         button_end.setOnClickListener {
-            openTableRecord("")
+            openTableRecordEnd()
         }
 
         button_save.setOnClickListener {
             val name = et_name.text.toString()
             if (name != "") {
-                //сохранение результата
-                openTableRecord(name)
+                openTableRecord(name, mode, level, record)
             } else {
                 if (et_name.hint.toString() != "") {
-                    openTableRecord(et_name.hint.toString())
+                    openTableRecord(et_name.hint.toString(), mode, level, record)
                 } else {
                     et_name.setBackgroundColor(getResources().getColor(R.color.colorAccent))
                 }

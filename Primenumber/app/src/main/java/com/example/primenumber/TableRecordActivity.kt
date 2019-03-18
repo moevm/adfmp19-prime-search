@@ -22,9 +22,9 @@ class TableRecordActivity : AppCompatActivity(),
 //        tabLayout.setupWithViewPager(viewPager, true)
         var tabLayout = findViewById<TabLayout>(R.id.tablayout)
 
-        tabLayout.addTab(tabLayout.newTab().setText("Игра на время"))
-        tabLayout.addTab(tabLayout.newTab().setText("Игра на скорость"))
-        tabLayout.addTab(tabLayout.newTab().setText("Бесконечный режим"))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.game_on_time))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.game_on_speed))
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.endless_mode))
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL)
 

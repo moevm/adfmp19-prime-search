@@ -9,6 +9,8 @@ import kotlinx.android.synthetic.main.activity_game.*
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.GridView
+import android.widget.TextView
+import java.util.*
 
 class Game : AppCompatActivity() {
 
@@ -32,20 +34,21 @@ class Game : AppCompatActivity() {
         var record = 0
 
         //изменение информации
-        when(mode) {
-            R.string.game_on_time.toString() -> {
-                //запускаем таймер
+        when (mode) {
+            "time" -> {
+
             }
-            R.string.game_on_speed.toString()-> {
-                //считаем 30 чисел
-                tv_info.text = "1/5"
+            "speed" -> {
+                button_end.visibility = Button.INVISIBLE
+                tv_info.setText("1/5")
+                tv_record.setText(record.toString())
             }
-            R.string.endless_mode.toString() -> {
-                //считаем баллы за правильные ответы и увеличиваем уровень
-                tv_info.text = "$record"
+            "endless" -> {
+                tv_record.setText(record.toString())
+                tv_info.visibility = TextView.GONE
+                level = "easy"
             }
         }
-
 
         button_end.setOnClickListener {
             openRecord(mode, level, record)
@@ -61,6 +64,7 @@ class Game : AppCompatActivity() {
             "easy" -> {
                 lower = 40
                 upper = 200
+                Log.d("QQQ", "$level $lower $upper")
             }
             "average" -> {
                 lower = 200
@@ -71,20 +75,9 @@ class Game : AppCompatActivity() {
                 upper = 2000
             }
         }
+        Log.d("QQQ", "$level $lower $upper")
 
-        when (mode) {
-            "time" -> {
-
-            }
-            "speed" -> {
-                button_end.visibility = Button.INVISIBLE
-                tv_info.setText("1/5")
-                tv_record.setText("0")
-            }
-            "endless" -> {
-
-            }
-        }
+        tv_number.text = generation(lower, upper).toString()
 
         val adapter = ArrayAdapter<Int>(this, R.layout.table_item, prime_number)
         gridView.adapter = adapter
@@ -101,7 +94,7 @@ class Game : AppCompatActivity() {
                     //показываем простые числа
                     visiblePrime = true
                     gridView.visibility = View.VISIBLE
-                    record += 5
+                    record += 2
 
                     button_prime.visibility = Button.INVISIBLE
                     button_composite.text = "Ок"
@@ -122,25 +115,39 @@ class Game : AppCompatActivity() {
                         }
                         "endless" -> {
                             tv_number.text = generation(lower, upper).toString()
+                            tv_record.text = record.toString()
                         }
                     }
                 }
             } else {
                 //скрываем простые числа и обрабатываем введенные данные
+                var div = emptyArray<Int>()
+                for (el in prime_number) {
+                    if (tv_number.text.toString().toInt() % el == 0) {
+                        div += el
+                    }
+                }
+                var correct = 0
+                var uncorrect = 0
                 with(gridView.checkedItemPositions) {
                     for (i in 0 until size()) {
                         val key = keyAt(i)
                         val value = this[key]
                         if (value) {
                             //проверка
-                            if (tv_number.text.toString().toInt() % prime_number[key] == 0) {
-                                record += 2
+                            if (prime_number[key] in div) {
+                                correct++
                             } else {
-                                record -= 1
+                                uncorrect++
                             }
                         }
                     }
                 }
+
+                uncorrect = Math.ceil(8 * uncorrect.toDouble() / (correct + uncorrect).toDouble()).toInt()
+                correct = Math.ceil(8 * correct.toDouble() / (div.size).toDouble()).toInt()
+
+                record += (correct - uncorrect)
 
                 gridView.clearChoices()
 
@@ -164,7 +171,20 @@ class Game : AppCompatActivity() {
                         }
                     }
                     "endless" -> {
+                        if (level == "easy" && record > 200) {
+                            level = "average"
+                        }
+                        if (level == "average" && record > 500) {
+                            level = "difficult"
+                        }
+                        if (level == "average" && record < 200) {
+                            level = "easy"
+                        }
+                        if (level == "difficult" && record < 500) {
+                            level = "average"
+                        }
                         tv_number.text = generation(lower, upper).toString()
+                        tv_record.text = record.toString()
                     }
                 }
             }
@@ -178,7 +198,7 @@ class Game : AppCompatActivity() {
                 "speed" -> {
                     val number = tv_number.text.toString().toInt()
                     if (isPrime(number)) {
-                        record += 5
+                        record += 10
                     }
                     if (count < 5) {
                         count++
@@ -190,13 +210,27 @@ class Game : AppCompatActivity() {
                     }
                 }
                 "endless" -> {
+                    val number = tv_number.text.toString().toInt()
+                    if (isPrime(number)) {
+                        record += 10
+                    }
+                    if (level == "easy" && record > 200) {
+                        level = "average"
+                    }
+                    if (level == "average" && record > 500) {
+                        level = "difficult"
+                    }
+                    if (level == "average" && record < 200) {
+                        level = "easy"
+                    }
+                    if (level == "difficult" && record < 500) {
+                        level = "average"
+                    }
                     tv_number.text = generation(lower, upper).toString()
+                    tv_record.text = record.toString()
                 }
             }
         }
-
-
-        tv_number.text = generation(lower, upper).toString()
 
     }
 }
