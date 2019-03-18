@@ -16,8 +16,13 @@ import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 
 import android.content.ContextWrapper
+import android.content.Intent
+import android.os.Build
+import android.support.annotation.RequiresApi
+import android.widget.Button
 import kotlinx.android.synthetic.main.fragment_tab_item_time.*
 import java.util.*
+import java.util.stream.Collectors
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -54,12 +59,13 @@ class tabItem_speed : Fragment(), AdapterView.OnItemClickListener {
 
             }
 
+            @RequiresApi(Build.VERSION_CODES.N)
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val recordFileEasy = "recordspeedeasy.txt"
                 val recordFileMedium = "recordspeedaverage.txt"
                 val recordFileHard = "recordspeeddifficult.txt"
 
-                val recordList = ArrayList<String>()
+                var recordList = ArrayList<String>()
                 try {
                     val contextWrapper = android.content.ContextWrapper(context)
 
@@ -77,6 +83,12 @@ class tabItem_speed : Fragment(), AdapterView.OnItemClickListener {
                     while (scanner.hasNextLine()) {
                         recordList.add(scanner.nextLine() + "\n")
                     }
+
+                    recordList = ArrayList(recordList.stream().map { t ->
+                        val split = t.split(" ")
+                        Pair<Int, String>(split[split.size - 1].trim().toInt(),t)
+                    }.sorted { p0, p1 -> -p0.first.compareTo(p1.first) }
+                        .map { p0 -> p0.second }.collect(Collectors.toList()).toList().take(10))
 
                     Log.d("QQQ", "success = ${recordList.size}")
                 } catch (ioe: IOException) {
@@ -114,8 +126,13 @@ class tabItem_speed : Fragment(), AdapterView.OnItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val inflater = inflater.inflate(R.layout.fragment_tab_item_speed, container, false)
-        return inflater
+        val inflate =  inflater.inflate(R.layout.fragment_tab_item_speed, container, false)
+        val findViewById = inflate.findViewById<Button>(R.id.button_speed)
+        findViewById.setOnClickListener{
+            val intent = Intent(context, MainActivity::class.java)
+            startActivity(intent)
+        }
+        return inflate
     }
 
     // TODO: Rename method, update argument and hook method into UI event

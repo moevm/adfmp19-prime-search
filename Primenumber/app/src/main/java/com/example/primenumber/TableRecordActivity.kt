@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_table_record.*
+import kotlinx.android.synthetic.main.fragment_tab_item_endless.*
 
 class TableRecordActivity : AppCompatActivity(),
                             tabItem_time.OnFragmentInteractionListener,

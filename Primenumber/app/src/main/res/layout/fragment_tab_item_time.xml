@@ -15,7 +15,13 @@
                 android:layout_height="wrap_content" android:id="@+id/spinnerTime" tools:layout_marginTop="1000dp"/>
         <ListView
                 android:layout_width="match_parent"
-                android:layout_height="575dp" android:id="@+id/listTimeView" tools:layout_marginTop="300px"/>
+                android:layout_height="521dp" android:id="@+id/listTimeView" tools:layout_marginTop="300px"/>
+
+        <Button
+                android:text="Back To Main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:id="@+id/button_time"
+                tools:layout_marginBottom="150px"/>
     </LinearLayout>
 
 

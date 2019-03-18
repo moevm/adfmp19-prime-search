@@ -1,8 +1,11 @@
 package com.example.primenumber
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,11 +13,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import kotlinx.android.synthetic.main.fragment_tab_item_endless.*
 import kotlinx.android.synthetic.main.fragment_tab_item_speed.*
 import java.io.IOException
 import java.io.InputStreamReader
 import java.util.*
+import java.util.stream.Collectors
+import java.util.stream.Collectors.*
+import kotlin.collections.ArrayList
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,11 +44,12 @@ class tabItem_endless : Fragment() {
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val recordFile = "recordendless.txt"
+        val recordFile = "recordendlesseasy.txt"
 
-        val recordList = ArrayList<String>()
+        var recordList = ArrayList<String>()
         try {
             val contextWrapper = android.content.ContextWrapper(context)
 
@@ -54,6 +62,12 @@ class tabItem_endless : Fragment() {
             while (scanner.hasNextLine()) {
                 recordList.add(scanner.nextLine() + "\n")
             }
+
+            recordList = ArrayList(recordList.stream().map { t ->
+                val split = t.split(" ")
+                Pair<Int, String>(split[split.size - 1].trim().toInt(),t)
+            }.sorted { p0, p1 -> -p0.first.compareTo(p1.first) }
+                .map { p0 -> p0.second }.collect(Collectors.toList()).toList().take(10))
 
             Log.d("QQQ", "success = ${recordList.size}")
         } catch (ioe: IOException) {
@@ -74,6 +88,7 @@ class tabItem_endless : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onCreateView(
@@ -81,7 +96,14 @@ class tabItem_endless : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tab_item_endless, container, false)
+        val inflate =  inflater.inflate(R.layout.fragment_tab_item_endless, container, false)
+        val findViewById = inflate.findViewById<Button>(R.id.button_endless)
+        findViewById.setOnClickListener{
+            val intent = Intent(context, MainActivity::class.java)
+            startActivity(intent)
+        }
+        return inflate
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
