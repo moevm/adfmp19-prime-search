@@ -15,12 +15,18 @@
                 android:layout_height="wrap_content" android:id="@+id/spinnerTime" tools:layout_marginTop="1000dp"/>
         <ListView
                 android:layout_width="match_parent"
-                android:layout_height="521dp" android:id="@+id/listTimeView" tools:layout_marginTop="300px"/>
+                android:layout_height="0dp"
+                android:id="@+id/listTimeView"
+                tools:layout_marginTop="300px"
+                android:layout_weight="10"/>
 
         <Button
-                android:text="Back To Main"
+                android:text="@string/main"
+                style="@style/button_main"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/button_time"
+                android:layout_height="0dp"
+                android:id="@+id/button_time"
                 tools:layout_marginBottom="150px"/>
     </LinearLayout>
 

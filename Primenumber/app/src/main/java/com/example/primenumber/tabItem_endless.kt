@@ -15,12 +15,10 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import kotlinx.android.synthetic.main.fragment_tab_item_endless.*
-import kotlinx.android.synthetic.main.fragment_tab_item_speed.*
 import java.io.IOException
 import java.io.InputStreamReader
 import java.util.*
 import java.util.stream.Collectors
-import java.util.stream.Collectors.*
 import kotlin.collections.ArrayList
 
 
@@ -47,7 +45,7 @@ class tabItem_endless : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val recordFile = "recordendlesseasy.txt"
+        val recordFile = "recordendless.txt"
 
         var recordList = ArrayList<String>()
         try {

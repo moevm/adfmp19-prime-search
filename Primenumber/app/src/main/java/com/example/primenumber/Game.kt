@@ -99,6 +99,10 @@ class Game : AppCompatActivity() {
                     button_prime.visibility = Button.INVISIBLE
                     button_composite.text = "Ок"
                 } else {
+                    record -= 5
+                    if (record < 0) {
+                        record = 0
+                    }
                     when (mode) {
                         "time" -> {
                             tv_number.text = generation(lower, upper).toString()
@@ -199,6 +203,11 @@ class Game : AppCompatActivity() {
                     val number = tv_number.text.toString().toInt()
                     if (isPrime(number)) {
                         record += 10
+                    } else {
+                        record -= 5
+                        if (record < 0) {
+                            record = 0
+                        }
                     }
                     if (count < 5) {
                         count++
@@ -213,6 +222,11 @@ class Game : AppCompatActivity() {
                     val number = tv_number.text.toString().toInt()
                     if (isPrime(number)) {
                         record += 10
+                    } else {
+                        record -= 5
+                        if (record < 0) {
+                            record = 0
+                        }
                     }
                     if (level == "easy" && record > 200) {
                         level = "average"

@@ -13,9 +13,16 @@ class RecordActivity : AppCompatActivity() {
 
     fun openTableRecord(name: String, mode: String, level: String, record: Int) {
 
+        var level1 = "none"
+        if (mode == "endless") {
+            level1 = ""
+        } else {
+            level1 = level
+        }
+
         try {
             val recordOfRecord = "$name $record\n"
-            val recordFile = "record"+mode+level+".txt"
+            val recordFile = "record"+mode+level1+".txt"
             val fOut = openFileOutput(
                 recordFile,
                 Context.MODE_APPEND

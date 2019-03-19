@@ -20,7 +20,6 @@ import android.content.Intent
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.widget.Button
-import kotlinx.android.synthetic.main.fragment_tab_item_time.*
 import java.util.*
 import java.util.stream.Collectors
 
