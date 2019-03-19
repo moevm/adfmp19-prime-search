@@ -57,10 +57,11 @@ class tabItem_time : Fragment() {
 
         val spinnerAdapter = ArrayAdapter<String>(
             context,
-            android.R.layout.simple_list_item_1, arrayOf(getString(R.string.easy), getString(R.string.average), getString(R.string.difficult))
+            android.R.layout.simple_list_item_1,
+            arrayOf(getString(R.string.easy), getString(R.string.average), getString(R.string.difficult))
         )
 
-        spinnerTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinnerTime.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
@@ -71,6 +72,7 @@ class tabItem_time : Fragment() {
                 val recordFileMedium = "recordtimeaverage.txt"
                 val recordFileHard = "recordtimedifficult.txt"
 
+                var recordPairList = ArrayList<Pair<String, Int>>()
                 var recordList = ArrayList<String>()
                 try {
                     val contextWrapper = android.content.ContextWrapper(context)
@@ -93,9 +95,21 @@ class tabItem_time : Fragment() {
                     recordList = ArrayList(recordList.stream().map { t ->
                         val split = t.split(" ")
                         Log.d("QQQ", split[split.size - 1].trim())
-                        Pair<Int, String>(split[split.size - 1].trim().toInt(),t)
+                        Pair<Int, String>(split[split.size - 1].trim().toInt(), t)
                     }.sorted { p0, p1 -> -p0.first.compareTo(p1.first) }
                         .map { p0 -> p0.second }.collect(Collectors.toList()).toList().take(10))
+
+                    recordPairList = ArrayList(recordList.stream().map { t ->
+                        Pair(
+                            t.substring(0, t.length - t.split(" ")[t.split(" ").size - 1].trim().length - 2),
+                            t.split(" ")[t.split(" ").size - 1].trim().toInt()
+                        )
+                    }.collect(Collectors.toList()).toList())
+
+                    val pair = recordPairList.take(1)[0]
+                    val first = pair.first
+                    val second = pair.second
+                    Log.d("QQQ", "aloha $first $second")
 
                     Log.d("QQQ", "success = ${recordList.size}")
                 } catch (ioe: IOException) {
@@ -119,9 +133,9 @@ class tabItem_time : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val inflate =  inflater.inflate(R.layout.fragment_tab_item_time, container, false)
+        val inflate = inflater.inflate(R.layout.fragment_tab_item_time, container, false)
         val findViewById = inflate.findViewById<Button>(R.id.button_time)
-        findViewById.setOnClickListener{
+        findViewById.setOnClickListener {
             val intent = Intent(context, MainActivity::class.java)
             startActivity(intent)
         }

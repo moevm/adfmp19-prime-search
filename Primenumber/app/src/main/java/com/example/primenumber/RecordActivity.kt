@@ -2,12 +2,15 @@ package com.example.primenumber
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_record.*
 import java.io.*
 import java.util.*
+import java.util.stream.Collectors
 
 class RecordActivity : AppCompatActivity() {
 
@@ -51,6 +54,7 @@ class RecordActivity : AppCompatActivity() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record)
@@ -58,6 +62,48 @@ class RecordActivity : AppCompatActivity() {
         val mode = getIntent().getStringExtra("mode")
         val level = getIntent().getStringExtra("level")
         val record = getIntent().getIntExtra("record", 0)
+
+        var level1 = "none"
+        if (mode == "endless") {
+            level1 = ""
+        } else {
+            level1 = level
+        }
+
+        val recordFile = "record"+mode+level1+".txt"
+        var recordList = ArrayList<String>()
+        var loser : Int = -1
+        try {
+            val contextWrapper = android.content.ContextWrapper(this)
+
+            val fIn = contextWrapper.openFileInput(recordFile)
+
+            val isr = InputStreamReader(fIn)
+
+            val scanner = Scanner(isr)
+
+            while (scanner.hasNextLine()) {
+                recordList.add(scanner.nextLine() + "\n")
+            }
+
+            recordList = ArrayList(recordList.stream().map { t ->
+                val split = t.split(" ")
+                Log.d("QQQ", split[split.size - 1].trim())
+                Pair<Int, String>(split[split.size - 1].trim().toInt(),t)
+            }.sorted { p0, p1 -> -p0.first.compareTo(p1.first) }
+                .map { p0 -> p0.second }.collect(Collectors.toList()).toList().take(10))
+
+            Log.d("QQQ", "success = ${recordList.size}")
+            val topPlayerRecord = recordList[0]
+            tv_top.setText("1-ое место: $topPlayerRecord")
+            if (recordList.size >= 10) {
+                loser = recordList[9].split(" ")[recordList[9].split(" ").size - 1].trim().toInt()
+            }
+        } catch (ioe: IOException) {
+            ioe.printStackTrace()
+        }
+
+        Log.d("QQQ", "it's loser message $loser")
 
         if (mode != "endless") {
             tv_record.setText("Ваш рекорд: $record/50")

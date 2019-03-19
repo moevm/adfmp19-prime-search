@@ -22,6 +22,7 @@ import android.support.annotation.RequiresApi
 import android.widget.Button
 import java.util.*
 import java.util.stream.Collectors
+import kotlin.collections.ArrayList
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -65,6 +66,7 @@ class tabItem_speed : Fragment(), AdapterView.OnItemClickListener {
                 val recordFileHard = "recordspeeddifficult.txt"
 
                 var recordList = ArrayList<String>()
+                var recordPairList = ArrayList<Pair<String, Int>>()
                 try {
                     val contextWrapper = android.content.ContextWrapper(context)
 
@@ -88,6 +90,18 @@ class tabItem_speed : Fragment(), AdapterView.OnItemClickListener {
                         Pair<Int, String>(split[split.size - 1].trim().toInt(),t)
                     }.sorted { p0, p1 -> -p0.first.compareTo(p1.first) }
                         .map { p0 -> p0.second }.collect(Collectors.toList()).toList().take(10))
+
+                    recordPairList = ArrayList(recordList.stream().map { t ->
+                        Pair(
+                            t.substring(0, t.length - t.split(" ")[t.split(" ").size - 1].trim().length - 2),
+                            t.split(" ")[t.split(" ").size - 1].trim().toInt()
+                        )
+                    }.collect(Collectors.toList()).toList())
+
+                    val pair = recordPairList.take(1)[0]
+                    val first = pair.first
+                    val second = pair.second
+                    Log.d("QQQ","aloha $first $second")
 
                     Log.d("QQQ", "success = ${recordList.size}")
                 } catch (ioe: IOException) {
