@@ -45,6 +45,19 @@ class RecordActivity : AppCompatActivity() {
         }
 
         val intent = Intent(this, TableRecordActivity::class.java)
+        when (mode) {
+            "time" ->    intent.putExtra("mode", "time")
+            "speed" ->    intent.putExtra("mode", "speed")
+            else -> intent.putExtra("mode", "endless")
+        }
+        Log.d("QQQ", level + "це левел")
+        when (level) {
+            "easy" ->    intent.putExtra("level", "easy")
+            "average" ->    intent.putExtra("level", "average")
+            "hard" -> intent.putExtra("level", "hard")
+            else -> intent.putExtra("level", "")
+        }
+
         startActivity(intent)
     }
 

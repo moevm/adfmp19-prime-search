@@ -20,6 +20,7 @@ import android.content.Intent
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.widget.Button
+import kotlinx.android.synthetic.main.fragment_tab_item_time.*
 import java.util.*
 import java.util.stream.Collectors
 import kotlin.collections.ArrayList
@@ -119,6 +120,14 @@ class tabItem_speed : Fragment(), AdapterView.OnItemClickListener {
 
         spinnerSpeed.adapter = spinnerAdapter
 
+        val level = TabItemSpinnerState.getInstance().level
+        if (level.equals("easy")) {
+            spinnerSpeed.setSelection(0)
+        } else if (level.equals("average")) {
+            spinnerSpeed.setSelection(1)
+        } else {
+            spinnerSpeed.setSelection(2)
+        }
     }
 
     private var param2: String? = null

@@ -126,6 +126,15 @@ class tabItem_time : Fragment() {
         }
 
         spinnerTime.adapter = spinnerAdapter
+
+        val level = TabItemSpinnerState.getInstance().level
+        if (level.equals("easy")) {
+            spinnerTime.setSelection(0)
+        } else if (level.equals("average")) {
+            spinnerTime.setSelection(1)
+        } else {
+            spinnerTime.setSelection(2)
+        }
     }
 
     override fun onCreateView(

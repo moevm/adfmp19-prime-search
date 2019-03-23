@@ -100,6 +100,8 @@ class tabItem_endless : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
+
+
     }
 
     override fun onCreateView(
