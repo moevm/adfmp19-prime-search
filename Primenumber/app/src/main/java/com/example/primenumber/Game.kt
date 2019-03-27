@@ -1,16 +1,17 @@
 package com.example.primenumber
 
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.*
 import kotlinx.android.synthetic.main.activity_game.*
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.GridView
-import android.widget.TextView
 import java.util.*
+import android.os.CountDownTimer
+import android.support.annotation.RequiresApi
 
 class Game : AppCompatActivity() {
 
@@ -36,7 +37,22 @@ class Game : AppCompatActivity() {
         //изменение информации
         when (mode) {
             "time" -> {
+                Log.d("QQQ", "time1")
+                button_end.visibility = Button.INVISIBLE
+                tv_info.setText("10")
+                tv_record.setText(record.toString())
+                Log.d("QQQ", "time2")
+                object: CountDownTimer(10000, 1000) {
+                    @RequiresApi(Build.VERSION_CODES.M)
+                    override fun onFinish() {
+                        openRecord(mode, level, record)
+                    }
 
+                    override fun onTick(millisUntilFinished: Long) {
+                        tv_info.setText( (millisUntilFinished / 1000).toInt() )
+                    }
+                }.start()
+                Log.d("QQQ", "time3")
             }
             "speed" -> {
                 button_end.visibility = Button.INVISIBLE
@@ -64,7 +80,6 @@ class Game : AppCompatActivity() {
             "easy" -> {
                 lower = 40
                 upper = 200
-                Log.d("QQQ", "$level $lower $upper")
             }
             "average" -> {
                 lower = 200
@@ -78,6 +93,9 @@ class Game : AppCompatActivity() {
         Log.d("QQQ", "$level $lower $upper")
 
         tv_number.text = generation(lower, upper).toString()
+
+        Log.d("QQQ", "${tv_number.text.toString()}")
+
 
         val adapter = ArrayAdapter<Int>(this, R.layout.table_item, prime_number)
         gridView.adapter = adapter
@@ -99,6 +117,18 @@ class Game : AppCompatActivity() {
                     button_prime.visibility = Button.INVISIBLE
                     button_composite.text = "Ок"
                 } else {
+                    button_composite.setBackgroundColor(Color.RED)
+                    object: CountDownTimer(250, 1000) {
+                        @RequiresApi(Build.VERSION_CODES.M)
+                        override fun onFinish() {
+                            button_composite.setBackgroundColor(getColor(R.color.colorPrimary))
+                        }
+
+                        override fun onTick(millisUntilFinished: Long) {
+
+                        }
+                    }.start()
+
                     record -= 5
                     if (record < 0) {
                         record = 0
@@ -106,6 +136,7 @@ class Game : AppCompatActivity() {
                     when (mode) {
                         "time" -> {
                             tv_number.text = generation(lower, upper).toString()
+                            tv_record.text = record.toString()
                         }
                         "speed" -> {
                             if (count < 5) {
@@ -126,9 +157,15 @@ class Game : AppCompatActivity() {
             } else {
                 //скрываем простые числа и обрабатываем введенные данные
                 var div = emptyArray<Int>()
+                var strDiv = ""
                 for (el in prime_number) {
                     if (tv_number.text.toString().toInt() % el == 0) {
                         div += el
+                        if (strDiv == "") {
+                            strDiv += "$el"
+                        } else {
+                            strDiv += ", $el"
+                        }
                     }
                 }
                 var correct = 0
@@ -148,6 +185,8 @@ class Game : AppCompatActivity() {
                     }
                 }
 
+                Toast.makeText(this, strDiv, Toast.LENGTH_LONG).show()
+
                 uncorrect = Math.ceil(8 * uncorrect.toDouble() / (correct + uncorrect).toDouble()).toInt()
                 correct = Math.ceil(8 * correct.toDouble() / (div.size).toDouble()).toInt()
 
@@ -163,6 +202,7 @@ class Game : AppCompatActivity() {
                 when (mode) {
                     "time" -> {
                         tv_number.text = generation(lower, upper).toString()
+                        tv_record.text = record.toString()
                     }
                     "speed" -> {
                         if (count < 5) {
@@ -195,12 +235,32 @@ class Game : AppCompatActivity() {
         }
 
         button_prime.setOnClickListener {
+            val number = tv_number.text.toString().toInt()
+
+            if (isPrime(number)){
+                button_prime.setBackgroundColor(Color.GREEN)
+            } else {
+                button_prime.setBackgroundColor(Color.RED)
+            }
+
+            object: CountDownTimer(250, 1000) {
+                @RequiresApi(Build.VERSION_CODES.M)
+                override fun onFinish() {
+                    button_prime.setBackgroundColor(getColor(R.color.colorPrimary))
+                }
+
+                override fun onTick(millisUntilFinished: Long) {
+
+                }
+            }.start()
+
+
             when (mode) {
                 "time" -> {
                     tv_number.text = generation(lower, upper).toString()
+                    tv_record.text = record.toString()
                 }
                 "speed" -> {
-                    val number = tv_number.text.toString().toInt()
                     if (isPrime(number)) {
                         record += 10
                     } else {
@@ -219,7 +279,6 @@ class Game : AppCompatActivity() {
                     }
                 }
                 "endless" -> {
-                    val number = tv_number.text.toString().toInt()
                     if (isPrime(number)) {
                         record += 10
                     } else {

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.util.Log
+import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.activity_record.*
 import java.io.*
 import java.util.*
@@ -66,6 +67,10 @@ class RecordActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun openMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -108,7 +113,7 @@ class RecordActivity : AppCompatActivity() {
 
             Log.d("QQQ", "success = ${recordList.size}")
             val topPlayerRecord = recordList[0]
-            tv_top.setText("1-ое место: $topPlayerRecord")
+            tv_top.setText("${getString(R.string.top)} $topPlayerRecord")
             if (recordList.size >= 10) {
                 loser = recordList[9].split(" ")[recordList[9].split(" ").size - 1].trim().toInt()
             }
@@ -116,19 +121,31 @@ class RecordActivity : AppCompatActivity() {
             ioe.printStackTrace()
         }
 
+        if (loser > record) {
+            ll_bad.visibility = LinearLayout.VISIBLE
+            ll_good.visibility = LinearLayout.GONE
+        } else {
+            ll_good.visibility = LinearLayout.VISIBLE
+            ll_bad.visibility = LinearLayout.GONE
+        }
+
         Log.d("QQQ", "it's loser message $loser")
 
         if (mode != "endless") {
-            tv_record.setText("Ваш рекорд: $record/50")
+            tv_record.setText("${getString(R.string.record)} $record/50")
         } else {
-            tv_record.setText("Ваш рекорд: $record")
+            tv_record.setText("${getString(R.string.record)} $record")
         }
 
         val nameUser = "Игрок" + Random().nextInt(1000).toString()
         et_name.hint = nameUser
 
-        button_end.setOnClickListener {
+        button_record.setOnClickListener {
             openTableRecordEnd()
+        }
+
+        button_main.setOnClickListener {
+            openMain()
         }
 
         button_save.setOnClickListener {

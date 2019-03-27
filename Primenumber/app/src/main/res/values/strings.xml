@@ -13,4 +13,6 @@
     <string name="name">Введите имя игрока:</string>
     <string name="save">Сохранить</string>
     <string name="main">Главная страница</string>
+    <string name="tablerecord">Таблица рекордов</string>
+    <string name="badplay">К сожалению, Вы набрали слишком мало баллов</string>
 </resources>
