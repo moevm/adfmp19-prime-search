@@ -20,6 +20,8 @@ import android.content.Intent
 import android.os.Build
 import android.support.annotation.RequiresApi
 import android.widget.Button
+import android.widget.GridView
+import kotlinx.android.synthetic.main.fragment_tab_item_endless.*
 import kotlinx.android.synthetic.main.fragment_tab_item_time.*
 import java.util.*
 import java.util.stream.Collectors
@@ -109,11 +111,16 @@ class tabItem_speed : Fragment(), AdapterView.OnItemClickListener {
                     ioe.printStackTrace()
                 }
 
-                val adapter = ArrayAdapter<String>(
-                    context,
-                    android.R.layout.simple_list_item_1, recordList
-                )
+                var recordList2: Array<String> = emptyArray()
+                for (el in recordPairList) {
+                    recordList2 += el.first
+                    recordList2 += el.second.toString()
+                }
+
+                val adapter = ArrayAdapter<String>(context, R.layout.table_item2, recordList2)
                 listSpeedView.adapter = adapter
+                listSpeedView.numColumns = 2
+                listSpeedView.gravity = GridView.TEXT_ALIGNMENT_CENTER
             }
 
         }

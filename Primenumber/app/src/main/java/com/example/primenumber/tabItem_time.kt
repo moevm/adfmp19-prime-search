@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.GridView
 import kotlinx.android.synthetic.main.fragment_tab_item_endless.*
 import kotlinx.android.synthetic.main.fragment_tab_item_speed.*
 import kotlinx.android.synthetic.main.fragment_tab_item_time.*
@@ -116,11 +117,16 @@ class tabItem_time : Fragment() {
                     ioe.printStackTrace()
                 }
 
-                val adapter = ArrayAdapter<String>(
-                    context,
-                    android.R.layout.simple_list_item_1, recordList
-                )
+                var recordList2: Array<String> = emptyArray()
+                for (el in recordPairList) {
+                    recordList2 += el.first
+                    recordList2 += el.second.toString()
+                }
+
+                val adapter = ArrayAdapter<String>(context, R.layout.table_item2, recordList2)
                 listTimeView.adapter = adapter
+                listTimeView.numColumns = 2
+                listTimeView.gravity = GridView.TEXT_ALIGNMENT_CENTER
             }
 
         }
