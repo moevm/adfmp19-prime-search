@@ -49,7 +49,7 @@ class Game : AppCompatActivity() {
                     }
 
                     override fun onTick(millisUntilFinished: Long) {
-                        tv_info.setText( (millisUntilFinished / 1000).toInt() )
+                        tv_info.setText( (millisUntilFinished / 1000).toInt().toString() )
                     }
                 }.start()
                 Log.d("QQQ", "time3")
@@ -257,6 +257,14 @@ class Game : AppCompatActivity() {
 
             when (mode) {
                 "time" -> {
+                    if (isPrime(number)) {
+                        record += 10
+                    } else {
+                        record -= 5
+                        if (record < 0) {
+                            record = 0
+                        }
+                    }
                     tv_number.text = generation(lower, upper).toString()
                     tv_record.text = record.toString()
                 }
